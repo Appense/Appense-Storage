@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 
 export default function Home() {
-  const form = useForm()
 
   return (
     <div className="grid place-items-center h-screen">
@@ -33,10 +33,18 @@ export function LoginForm() {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
+    signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      callbackUrl: "/dashboard"
+    })
+    
+    
+    
   }
 
   return (
