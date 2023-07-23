@@ -6,6 +6,17 @@ import { useForm } from "react-hook-form"
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { useToast } from "@/components/ui/use-toast"
+
 
 export default function Home() {
 
@@ -31,7 +42,7 @@ export function LoginForm() {
       password: "",
     },
   })
- 
+
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -47,6 +58,7 @@ export function LoginForm() {
     
   }
 
+  const { toast } = useToast()
   return (
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -76,7 +88,37 @@ export function LoginForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Log In</Button>
+          <div className="flex justify-between items-start ">
+            <Button type="submit">Log In</Button>
+            <Sheet>
+              <SheetTrigger className="text-sm">Forgot password?</SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Have you forgotten your password? Just Relax</SheetTitle>
+                  <SheetDescription>
+                    We'll help you reset your password using your email address
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6 ">
+                    <div className="gap-2 flex flex-col">
+                      <Input placeholder="root@appense.com" />
+                      {/* <Button type="submit">Change password</Button> */}
+                      <SheetClose asChild>
+                        <Button type="submit" onClick={() => {
+                          toast({
+                            title: "Check your email",
+                            description: "We've sent you a link to reset your password.",
+                          })
+                        }}
+                        >Change password</Button>
+                      </SheetClose>
+                    </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+            
+          </div>
+          
         </form>
       </Form>
   )
