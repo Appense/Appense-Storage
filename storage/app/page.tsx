@@ -16,8 +16,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useToast } from "@/components/ui/use-toast"
-
-
+import { useState } from "react"
 export default function Home() {
 
   return (
@@ -35,6 +34,10 @@ const formSchema = z.object({
 })
 
 export function LoginForm() {
+  const { toast } = useToast()
+  const [email, setEmail] = useState("")
+
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,8 +60,17 @@ export function LoginForm() {
     
     
   }
+  const sendEmail = async (email:any) => {
+    
+    const res = await fetch("/api/email", {
+      method:'POST',
+      
+      body: JSON.stringify({email: email})
+    })
+    console.log(res)
+  }
 
-  const { toast } = useToast()
+  
   return (
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -101,14 +113,14 @@ export function LoginForm() {
                 </SheetHeader>
                 <div className="mt-6 ">
                     <div className="gap-2 flex flex-col">
-                      <Input placeholder="root@appense.com" />
-                      {/* <Button type="submit">Change password</Button> */}
+                      <Input placeholder="root@appense.com" type="text" onChange={(e) => setEmail(e.target.value)}/>
                       <SheetClose asChild>
                         <Button type="submit" onClick={() => {
                           toast({
                             title: "Check your email",
                             description: "We've sent you a link to reset your password.",
-                          })
+                          }),
+                          sendEmail(email)
                         }}
                         >Change password</Button>
                       </SheetClose>

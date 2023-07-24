@@ -6,10 +6,8 @@ export default function Page() {
   const { data: session } = useSession()
 
   return (
-    <div>
+    <div className="p-4">
       <h1>Welcome {session?.user?.name}</h1>
-      <p>{session?.user?.email}</p>
-      <button onClick={() => signOut()}>Sign out</button>
     </div>
   )
 }
