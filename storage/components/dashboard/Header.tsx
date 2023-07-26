@@ -10,15 +10,21 @@ import {
 import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
 import { signOut } from "next-auth/react"
+import { useSidebarContext } from '@/app/providers'
 
 export default function NavBar() {
   const { data: session } = useSession()
+  const { isOpen,setIsOpen } = useSidebarContext()
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <div className="bg-neutral-800 w-full h-1/5 flex justify-between p-2">
     <span  className=" flex justify-center items-center">
       
-      <Button variant="ghost" className="text-white"><BsChevronLeft/></Button>
+      <Button variant="ghost" className="text-white" onClick={toggleSidebar}><BsChevronLeft/></Button>
     </span>
     
     <div>
