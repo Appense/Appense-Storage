@@ -2,20 +2,20 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { PrismaClient } from "@prisma/client"
 import { getServerSession } from "next-auth"
 import { Suspense } from "react"
+import db from "@/lib/db"
 
-const prisma = new PrismaClient()
 
 
 const page = async () => {
     const session = await getServerSession(authOptions)
     if (!session?.user?.email) return false
 
-    const user = await prisma.user.findUnique({
+    const user = await db.user.findUnique({
         where: {
             email: session?.user?.email
         }
     })
-    const files = await prisma.file.findMany({
+    const files = await db.file.findMany({
         where: {
             userId: user?.id
         }

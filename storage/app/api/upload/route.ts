@@ -1,7 +1,8 @@
 import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import db from '@/lib/db'
+
 
 export async function POST(request: NextRequest) {
   const data = await request.formData()
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest) {
  
   await writeFile(path, buffer)
   console.log(`open ${path} to see the uploaded file`)
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     where: {
       email: data.get('email')?.toString()
     }
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest) {
   console.log(user?.id);
   
   // database file logic
-  const createFile = await prisma.file.createMany({
+  const createFile = await db.file.createMany({
     data: [
       {
         userId: user?.id,

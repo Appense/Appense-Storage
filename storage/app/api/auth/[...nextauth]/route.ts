@@ -2,8 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaClient, User } from "@prisma/client"
 import { compare } from "bcrypt"
-
-const prisma = new PrismaClient()
+import db from "@/lib/db"
 
 export const authOptions: NextAuthOptions = {
     session: {
@@ -25,7 +24,7 @@ export const authOptions: NextAuthOptions = {
                 // Add logic here to look up the user from the credentials supplied
                 if (!credentials?.email || !credentials.password) return null
 
-                const user = await prisma.user.findUnique({
+                const user = await db.user.findUnique({
                     where: {
                         email: credentials.email
                     }

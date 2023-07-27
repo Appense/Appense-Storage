@@ -1,11 +1,11 @@
 "use client"
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import {AiFillHome} from "react-icons/ai"
-import {BsFiles} from "react-icons/bs"
-import {GrFavorite} from "react-icons/gr"
-import {RiFolderSharedLine} from "react-icons/ri"
-import {BsTrash} from "react-icons/bs"
+import { AiFillHome } from "react-icons/ai"
+import { BsFiles } from "react-icons/bs"
+import { GrFavorite } from "react-icons/gr"
+import {RiFolderSharedLine } from "react-icons/ri"
+import { BsTrash} from "react-icons/bs"
 import { useSidebarContext } from '@/app/providers'
 export default function SideBar() {
 
