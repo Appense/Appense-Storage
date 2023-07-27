@@ -12,7 +12,7 @@ async function main() {
       email: 'root@appense.com',
       name: 'root',
       password,
-      role: undefined
+      role: "ADMIN"
     }
   })
   console.log({ user })

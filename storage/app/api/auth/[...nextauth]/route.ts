@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, User } from "@prisma/client"
 import { compare } from "bcrypt"
 
 const prisma = new PrismaClient()
@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
                     id: user.id.toString(),
                     email: user.email,
                     name: user.name,
-                    randomKey: "xd"
+                    // randomKey: "xd"
                 }
             }
         })
@@ -54,11 +54,11 @@ export const authOptions: NextAuthOptions = {
         jwt: ({ token, user }) => {
             console.log('JWT Callback', { token, user });
             if (user) {
-                const u = user as unknown as any //should be prisma user type (casting is going on here <-)
+                const u = user as unknown as User //should be prisma user type (casting is going on here <-)
                 return {
                     ...token,
                     id: u.id,
-                    randomKey: u.randomKey
+                    // randomKey: u.randomKey
                 }
             }
             return token
@@ -71,7 +71,7 @@ export const authOptions: NextAuthOptions = {
                 user: {
                     ...session.user,
                     id: token.id,
-                    randomKey: token.randomKey
+                    // randomKey: token.randomKey
                 }
             }
         },
