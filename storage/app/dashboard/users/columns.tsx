@@ -1,8 +1,8 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
- 
+import { MoreHorizontal, Users } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -12,22 +12,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { User } from "@prisma/client"
+import { deleteUser } from "@/utils/deleteUser"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Users = {
-  id: string
-  name: string
-  email: string
-  createdAt: Date
-  space: number
-  spaceUsed: number
-  // status: string
-  role: "ADMIN" | "USER"
 
-}
 
-export const columns: ColumnDef<Users>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -59,8 +50,8 @@ export const columns: ColumnDef<Users>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const Users = row.original
- 
+      const User = row.original
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -72,13 +63,13 @@ export const columns: ColumnDef<Users>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(Users.email)}
+              onClick={() => navigator.clipboard.writeText(User.email)}
             >
               Copy Email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Edit user</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600 hover:text-red-600 focus:text-red-600">Delete user</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-600 hover:text-red-600 focus:text-red-600" onClick={()=> deleteUser(User.email)}>Delete user</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

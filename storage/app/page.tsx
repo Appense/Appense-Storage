@@ -109,7 +109,7 @@ export function LoginForm() {
                 <SheetHeader>
                   <SheetTitle>Have you forgotten your password? Just Relax</SheetTitle>
                   <SheetDescription>
-                    We'll help you reset your password using your email address
+                    We&apos;ll help you reset your password using your email address
                   </SheetDescription>
                 </SheetHeader>
                 <div className="mt-6 ">

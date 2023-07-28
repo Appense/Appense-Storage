@@ -1,16 +1,18 @@
 "use client"
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-
-import {AiFillHome} from "react-icons/ai"
-import {BsFiles} from "react-icons/bs"
-import {GrFavorite} from "react-icons/gr"
-import {RiFolderSharedLine} from "react-icons/ri"
-import {BsTrash} from "react-icons/bs"
-import {FiUsers} from "react-icons/fi"
+import { AiFillHome } from "react-icons/ai"
+import { BsFiles } from "react-icons/bs"
+import { GrFavorite } from "react-icons/gr"
+import {RiFolderSharedLine } from "react-icons/ri"
+import { BsTrash} from "react-icons/bs"
+import { FiUsers } from "react-icons/fi"
 
 import { useSidebarContext } from '@/app/providers'
 import { useRouter } from 'next/navigation'
+
+
+
 export default function SideBar() {
   const router = useRouter()
   const { isOpen } = useSidebarContext()
