@@ -7,6 +7,7 @@ import { GrFavorite } from "react-icons/gr"
 import {RiFolderSharedLine } from "react-icons/ri"
 import { BsTrash} from "react-icons/bs"
 import { useSidebarContext } from '@/app/providers'
+import Link from 'next/link'
 export default function SideBar() {
 
   const { isOpen } = useSidebarContext()
@@ -28,19 +29,19 @@ export default function SideBar() {
       
       { isOpen ? 
         <div className='px-4 mt-8 flex flex-col  items-center gap-2'>
-          <Button variant="outline" className='w-4/5 flex justify-start gap-2'><AiFillHome/></Button>
-          <Button variant="outline" className='w-4/5 flex justify-start gap-2'><BsFiles/></Button>
-          <Button variant="outline" className='w-4/5 flex justify-start gap-2'><GrFavorite/></Button>
-          <Button variant="outline" className='w-4/5 flex justify-start gap-2'><RiFolderSharedLine/></Button>
-          <Button variant="outline" className='w-4/5 flex justify-start gap-2'><BsTrash/></Button>
+          <Link href={"/"} passHref ><Button variant="outline" className='w-4/5 flex justify-start gap-2'><AiFillHome/></Button></Link>
+          <Link href={"/dashboard/files"} passHref ><Button variant="outline" className='w-4/5 flex justify-start gap-2'><BsFiles/></Button></Link>
+          <Link href={"/favourite"} passHref ><Button variant="outline" className='w-4/5 flex justify-start gap-2'><GrFavorite/></Button></Link>
+          <Link href={"/shared"} passHref ><Button variant="outline" className='w-4/5 flex justify-start gap-2'><RiFolderSharedLine/></Button></Link>
+          <Link href={"/trash"} passHref ><Button variant="outline" className='w-4/5 flex justify-start gap-2'><BsTrash/></Button></Link>
         </div>
         :
         <div className='px-4 mt-8 flex flex-col gap-2'>
-          <Button variant="outline" className='w-full flex justify-start gap-2'><AiFillHome/> Home</Button>
-          <Button variant="outline" className='w-full flex justify-start gap-2'><BsFiles/> My Files</Button>
-          <Button variant="outline" className='w-full flex justify-start gap-2'><GrFavorite/>Favorite</Button>
-          <Button variant="outline" className='w-full flex justify-start gap-2'><RiFolderSharedLine/>Shared</Button>
-          <Button variant="outline" className='w-full flex justify-start gap-2'><BsTrash/>Trash</Button>
+          <Link href={"/"} passHref ><Button variant="outline" className='w-full flex justify-start gap-2'><AiFillHome/>Home</Button></Link>
+          <Link href={"/dashboard/files"} passHref ><Button variant="outline" className='w-full flex justify-start gap-2'><BsFiles/>My Files</Button></Link>
+          <Link href={"/favourite"} passHref ><Button variant="outline" className='w-full flex justify-start gap-2'><GrFavorite/>Favorite</Button></Link>
+          <Link href={"/shared"} passHref ><Button variant="outline" className='w-full flex justify-start gap-2'><RiFolderSharedLine/>Shared</Button></Link>
+          <Link href={"/trash"} passHref ><Button variant="outline" className='w-full flex justify-start gap-2'><BsTrash/>Trash</Button></Link>
         </div>
       }
     </div>
