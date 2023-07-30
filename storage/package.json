@@ -26,6 +26,7 @@
     "@react-email/link": "0.0.5",
     "@react-email/tailwind": "0.0.8",
     "@tanstack/react-table": "^8.9.3",
+    "@total-typescript/ts-reset": "^0.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",
