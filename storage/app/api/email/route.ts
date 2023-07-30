@@ -6,6 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 export async function POST(request: Request) {
+  //make to send different emails based on the request body 
   const { email } = await request.json();
   await resend.sendEmail({
     from: 'onboarding@resend.dev',
