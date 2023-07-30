@@ -27,13 +27,13 @@ model User {
 }
 
 model File {
-  id         String   @id @unique @default(uuid())
-  name       String
-  path       String
-  extension  String
-  spaceTaken BigInt   @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  id        String   @id @unique @default(uuid())
+  name      String
+  path      String
+  extension String
+  size      BigInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
