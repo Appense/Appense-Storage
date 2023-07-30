@@ -12,32 +12,26 @@ import { useSession } from "next-auth/react"
 import { signOut } from "next-auth/react"
 import { useSidebarContext } from '@/app/providers'
 
-export default function NavBar() {
+export default function Navbar() {
   const { data: session } = useSession()
-  const { isOpen,setIsOpen } = useSidebarContext()
+  const { isOpen, setIsOpen } = useSidebarContext()
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen)
-  }
+
 
   return (
     <div className="bg-neutral-800 w-full h-1/5 flex justify-between p-2">
     <span  className=" flex justify-center items-center">
-      
-      <Button variant="ghost" className="text-white" onClick={toggleSidebar}><BsChevronLeft/></Button>
+      <Button variant="ghost" className="text-white" onClick={() => setIsOpen((prevIsOpen: boolean) => !prevIsOpen)} ><div className={!isOpen ? " rotate-180" : ""}><BsChevronLeft/></div></Button>,
     </span>
-    
     <div>
       <Input type="email" placeholder="Search" />
     </div>
-    
-
     <div >
       <Popover>
         <PopoverTrigger className="flex gap-2 items-center">
           <span className="font-light text-white">{session?.user?.email}</span>
           <Avatar>
-            <AvatarImage src="https://github.com/Verti1234.png" />
+            <AvatarImage src="https://github.com/Carpye.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </PopoverTrigger>

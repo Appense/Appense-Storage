@@ -51,28 +51,35 @@ export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         jwt: ({ token, user }) => {
-            console.log('JWT Callback', { token, user });
-            if (user) {
-                const u = user as unknown as User //should be prisma user type (casting is going on here <-)
-                return {
-                    ...token,
-                    id: u.id,
-                    // randomKey: u.randomKey
-                }
-            }
+            // console.log('JWT Callback', { token, user });
+            // if (user) {
+            //     const u = user as unknown as User //should be prisma user type (casting is going on here <-)
+            //     token = {
+            //         ...token,
+            //         // id: u.id,
+            //         // randomKey: u.randomKey
+            //     }
+            //     console.log("CUSTOM TOKEN: ", token);
+                
+            //     return token
+            // }
+            
             return token
             
         },
         session: ({ token, session }) => {
-            console.log('Session Callback', { token, session });
-            return {
+            // console.log('Session Callback', { token, session });
+            session = {
                 ...session,
                 user: {
                     ...session.user,
-                    id: token.id,
+                    id: token.sub,
                     // randomKey: token.randomKey
                 }
             }
+            // console.log('CUSTOM SESSION: ', session);
+            
+            return session
         },
     }
 }

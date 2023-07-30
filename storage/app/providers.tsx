@@ -1,9 +1,17 @@
 'use client'
-
+import { Dispatch, SetStateAction } from 'react';
 import { SessionProvider } from 'next-auth/react'
 import { createContext, useContext, useState } from 'react';
 
-const SidebarContext= createContext({isOpen: true, setIsOpen: (value: boolean) => {}})
+interface ISidebarContext {
+    isOpen: boolean
+    setIsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+const SidebarContext = createContext({
+    isOpen: true,
+    setIsOpen: (isOpen: boolean) => {}
+} as ISidebarContext )
 
 
 

@@ -13,23 +13,25 @@ enum Role {
 }
 
 model User {
-  id        String    @id @unique @default(uuid())
-  email     String    @unique
-  password  String
-  name      String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  space     BigInt    @default(2000000000)
-  spaceUsed BigInt    @default(0)
-  spaceLeft BigInt    @default(2000000000)
-  role      Role      @default(USER)
-  file      File[]
+  id            String    @id @unique @default(cuid())
+  email         String    @unique
+  password      String
+  name          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  space         BigInt    @default(2000000000)
+  spaceUsed     BigInt    @default(0)
+  spaceLeft     BigInt    @default(2000000000)
+  filesUploaded Int       @default(0)
+  role          Role      @default(USER)
+  file          File[]
 }
 
 model File {
-  id        String   @id @unique @default(uuid())
+  id        String   @id @unique @default(cuid())
   name      String
-  path      String
+  path      String   @unique
+  type      String
   extension String
   size      BigInt
   createdAt DateTime @default(now())
