@@ -1,14 +1,11 @@
 import { writeFile } from 'fs/promises'
+import { statSync } from 'fs'
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import db from '@/lib/db'
 
-
 export async function POST(request: NextRequest) {
-  const data = await request.formData()
-  // console.log(data);
-  // console.log(request);
-  
+  const data = await request.formData()  
   
   const file: File | null = data.get('file') as unknown as File
 
@@ -24,7 +21,9 @@ export async function POST(request: NextRequest) {
   const path = process.env.FILES_PATH + file.name || `tmp/${file.name}`
  
   await writeFile(path, buffer)
-  console.log(`open ${path} to see the uploaded file`)
+  console.log(`open ${path} to see the uploaded file.`)
+  console.log(bytes);
+  
   const user = await db.user.findUnique({
     where: {
       email: data.get('email')?.toString()
@@ -35,6 +34,10 @@ export async function POST(request: NextRequest) {
   
   console.log(user?.id);
   
+  const { size } = statSync(path)
+  console.log(size);
+  
+
   // database file logic
   const createFile = await db.file.createMany({
     data: [
@@ -43,6 +46,7 @@ export async function POST(request: NextRequest) {
         name: file.name,
         extension: file.name.slice(file.name.indexOf(".") + 1),
         path: path,
+        size,
 
       }
     ]
