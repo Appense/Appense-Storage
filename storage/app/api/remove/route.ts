@@ -14,7 +14,7 @@ export async function DELETE(request: Request) {
         status: 401
     })
 
-    const filesToRemove = data.getAll('paths[]') as string[]
+    const filesToRemove = data.getAll('files[]') as string[]
 
     // reject if files not found
     if (filesToRemove.length == 0) return new Response("Files not found", {
@@ -23,21 +23,25 @@ export async function DELETE(request: Request) {
 
 
    try {
-    const filesFromDb = filesToRemove.map(async file => {
+    filesToRemove.forEach(async file => {
+        console.log(file);
+        
         const filesDeleted = await db.file.delete({
             where: {
-                path: file
+                name: file
             }
         })
         console.log(filesDeleted);
         
 
-        unlinkSync(file)
+        unlinkSync(process.env.FILES_PATH + file)
+        console.log(`Successfully deleted ${filesToRemove.length} files. `);
+        
     })
     
     
    } catch (error) {
-    
+        console.error("An error occured while removing files", error);
    }
 
    
