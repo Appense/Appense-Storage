@@ -13,23 +13,33 @@ import {
 import { FormEvent, Suspense } from "react"
 import db from "@/lib/db"
 import DeleteFilesForm from "@/components/dashboard/deleteFilesForm"
-
-
+import { FilesTable } from "./files-table"
+import { columns } from "./columns"
 
 const page = async () => {
     const session = await getServerSession(authOptions)
     if (!session?.user?.email) return false
 
-    // const user = await db.user.findUnique({
-    //     where: {
-    //         email: session?.user?.email
-    //     }
-    // })
-    // const files = await db.file.findMany({
-    //     where: {
-    //         userId: user?.id
-    //     }
-    // })
+    const user = await db.user.findUnique({
+        where: {
+            email: session?.user?.email
+        }
+    })
+    console.log(user)
+    const files = await db.file.findMany({
+        where: {
+            // userId: user?.id
+            userId: 'clkqer4fz0000uem8oyw957hu'
+        }
+    })
+    console.log(files)
+    
+    const formattedFiles = files.map((file) => ({
+      ...file,
+      userId: user?.name,
+      createdAt: new Date(file.createdAt).toLocaleDateString(),
+      size: (Number(file.size) / (1024*1024)).toFixed(2) + " MB",
+    })) as unknown as any
 
     
 
@@ -37,7 +47,9 @@ const page = async () => {
     <div className="p-8">
         <Suspense fallback={<div>Loading...</div>}>
             <h1 className=" pl-4 text-4xl text-neutral-800">Files</h1>
-            <div className="p-4 flex flex-wrap gap-8 mt-16">
+            <div className="p-4 flex flex-col flex-wrap gap-8 mt-16">
+              
+            <FilesTable columns={columns} data={formattedFiles} />
               <DeleteFilesForm />
                 {/* {
                     files?.map(file => (
